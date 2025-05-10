@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>15 años Alexia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&display=swap');
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+    font-family: 'Poppins', sans-serif;
+    color: #330e0e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 10px;
+  }
+  header {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: #751515;
+    margin: 15px 0 10px;
+    text-shadow: 1px 1px 5px #fff7aa;
+    text-align: center;
+  }
+  main {
+    width: 100%;
+    max-width: 350px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    padding: 15px;
+    flex-shrink: 0;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #5c1b1b;
+  }
+  input[type="file"] {
+    font-size: 1rem;
+    cursor: pointer;
+    color: #722222;
+  }
+  button {
+    background-color: #da7c0c;
+    border: none;
+    padding: 12px 0;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 10px #b56c0a;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #b56408;
+  }
+  .gallery {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
+    gap: 10px;
+  }
+  .gallery-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+    background: #fff;
+  }
+  .gallery-item img,
+  .gallery-item video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+  .footer {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #582b2b;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<header>15 años Alexia</header>
+<main>
+  <form id="uploadForm">
+    <label for="mediaInput">Sube tus fotos o videos</label>
+    <input id="mediaInput" type="file" accept="image/*,video/*" multiple />
+    <button type="submit">Agregar a la galería</button>
+  </form>
+  <section class="gallery" id="gallery" aria-live="polite" aria-label="Galería de fotos y videos"></section>
+</main>
+<div class="footer">¡Celebra con nosotros este hermoso día!</div>
+
+<script>
+  const gallery = document.getElementById('gallery');
+  const form = document.getElementById('uploadForm');
+  const input = document.getElementById('mediaInput');
+
+  // Cargar galería desde localStorage
+  function loadGallery() {
+    const stored = localStorage.getItem('alexiaGallery');
+    if (stored) {
+      const items = JSON.parse(stored);
+      gallery.innerHTML = '';
+      items.forEach(item => {
+        addMediaToGallery(item);
+      });
+    }
+  }
+
+  // Agregar un elemento multimedia a la galería
+  function addMediaToGallery(item) {
+    const div = document.createElement('div');
+    div.classList.add('gallery-item');
+
+    if(item.type.startsWith('image')) {
+      const img = document.createElement('img');
+      img.src = item.data;
+      img.alt = 'Foto subida a 15 años Alexia';
+      div.appendChild(img);
+    } else if(item.type.startsWith('video')) {
+      const video = document.createElement('video');
+      video.src = item.data;
+      video.controls = true;
+      video.setAttribute('aria-label', 'Video subido a 15 años Alexia');
+      div.appendChild(video);
+    }
+    gallery.appendChild(div);
+  }
+
+  // Guardar la galería en localStorage
+  function saveGallery(items) {
+    localStorage.setItem('alexiaGallery', JSON.stringify(items));
+  }
+
+  // Al enviar el formulario subir los archivos seleccionados y agregarlos a la galería
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const files = input.files;
+    if (!files.length) {
+      alert('Por favor selecciona fotos o videos para subir.');
+      return;
+    }
+
+    const readerPromises = [];
+    for (let i = 0; i < files.length; i++) {
+      readerPromises.push(new Promise((resolve, reject) => {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = () => {
+          resolve({type: file.type, data: reader.result});
+        };
+        reader.onerror = () => {
+          reject('Error al leer el archivo');
+        };
+        reader.readAsDataURL(file);
+      }));
+    }
+    Promise.all(readerPromises).then(newItems => {
+      const prevItems = localStorage.getItem('alexiaGallery');
+      let currentItems = prevItems ? JSON.parse(prevItems) : [];
+      currentItems = currentItems.concat(newItems);
+      saveGallery(currentItems);
+      newItems.forEach(item => addMediaToGallery(item));
+      form.reset();
+    }).catch(err => {
+      alert("Ocurrió un error al procesar los archivos");
+      console.error(err);
+    });
+  });
+
+  loadGallery();
+</script>
+</body>
+</html>
+
