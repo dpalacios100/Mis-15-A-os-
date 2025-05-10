@@ -1,303 +1,89 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>Mis 15 Años</title>
-<style>
-  /* Palo rosa color palette */
-  :root {
-    --palo-rosa-light: #f7d2d2;
-    --palo-rosa: #e2979a;
-    --palo-rosa-dark: #b16365;
-    --background: #fff5f5;
-    --text-color: #4a3031;
-  }
-
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--background);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  header {
-    background: var(--palo-rosa);
-    padding: 1.5rem 1rem;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(226, 151, 154, 0.5);
-    user-select: none;
-  }
-
-  header h1 {
-    margin: 0;
-    font-weight: 800;
-    font-size: 2.2rem;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(110, 50, 50, 0.7);
-  }
-
-  main {
-    max-width: 1000px;
-    margin: 1rem auto 2rem auto;
-    padding: 0 1rem;
-  }
-
-  /* Description text */
-  #galleryDescription {
-    font-size: 1.1rem;
-    padding: 1rem 1rem 2rem 1rem;
-    color: var(--palo-rosa-dark);
-    font-weight: 500;
-    text-align: center;
-    user-select: none;
-    line-height: 1.4;
-  }
-
-  #galleryDescription span.heart {
-    color: #e54b67;
-    font-size: 1.3rem;
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1rem;
-  }
-
-  /* Container for each media item */
-  .media-item {
-    position: relative;
-    width: 100%;
-    padding-top: 100%; /* Square aspect ratio */
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 9px rgba(226, 151, 154, 0.4);
-    cursor: pointer;
-    background-color: white;
-    transition: transform 0.3s ease;
-  }
-
-  .media-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 18px rgba(226, 151, 154, 0.7);
-  }
-
-  /* Media content absolutely positioned and cropped */
-  .media-item img,
-  .media-item video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: translate(-50%, -50%);
-    border-radius: 8px;
-    user-select: none;
-  }
-
-  /* Lightbox overlay */
-  #lightboxOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0,0,0,0.85);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 1rem;
-  }
-
-  #lightboxOverlay.active {
-    display: flex;
-  }
-
-  #lightboxContent {
-    max-width: 90vw;
-    max-height: 90vh;
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 0 40px rgba(255,192,203,0.8);
-    background-color: #fff;
-  }
-
-  #lightboxContent img,
-  #lightboxContent video {
-    width: 100%;
-    height: auto;
-    max-height: 90vh;
-    display: block;
-    border-radius: 12px;
-  }
-
-  /* Close button */
-  #lightboxClose {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: var(--palo-rosa-dark);
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 0 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    user-select: none;
-    opacity: 0.9;
-    transition: opacity 0.2s ease;
-  }
-
-  #lightboxClose:hover {
-    opacity: 1;
-  }
-
-  /* Responsive tweaks */
-  @media (max-width: 600px) {
-    main {
-      margin: 0.5rem;
-      padding: 0 0.5rem;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis 15 Años - Alexia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #fff0f5;
+      color: #4b2e2e;
+      text-align: center;
     }
-
-    .gallery-grid {
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 0.6rem;
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      color: #d48c9c;
+      margin-top: 30px;
     }
-
-    header h1 {
-      font-size: 1.6rem;
+    .message {
+      font-size: 1.2em;
+      margin: 20px auto;
+      max-width: 600px;
+      padding: 10px 20px;
+      color: #6e3e47;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
     }
-
-    #galleryDescription {
-      font-size: 1rem;
-      padding-bottom: 1rem;
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 15px;
     }
-  }
-</style>
+    .gallery img {
+      width: 300px;
+      max-width: 90vw;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
-<header>
   <h1>Mis 15 Años</h1>
-</header>
-<main>
-
-  <div id="galleryDescription" aria-live="polite" aria-atomic="true">
-    Con mucho cariño te haremos parte de muchos momentos, metas, pasiones y bellos recuerdos de la vida de Alexia <span class="heart" aria-hidden="true">❤️</span>
-  </div>
-
-  <div class="gallery-grid" aria-label="Galería de fotos y videos">
-    <!-- Add your images and videos here with a standard size -->
-    <!-- Example images/videos: Update the src attributes below with your actual file URLs -->
-
-    <div class="media-item" tabindex="0" role="button" aria-label="Ver imagen 1">
-      <img src="media/foto1.jpg" alt="Foto 1 - Celebración Mis 15 Años" loading="lazy" />
-    </div>
-    <div class="media-item" tabindex="0" role="button" aria-label="Ver video 1">
-      <video src="media/video1.mp4" muted preload="metadata" playsinline></video>
-    </div>
-    <div class="media-item" tabindex="0" role="button" aria-label="Ver imagen 2">
-      <img src="media/foto2.jpg" alt="Foto 2 - Fiesta Mis 15 Años" loading="lazy" />
-    </div>
-    <div class="media-item" tabindex="0" role="button" aria-label="Ver imagen 3">
-      <img src="media/foto3.jpg" alt="Foto 3 - Familia y amigos" loading="lazy" />
-    </div>
-    <div class="media-item" tabindex="0" role="button" aria-label="Ver video 2">
-      <video src="media/video2.mp4" muted preload="metadata" playsinline></video>
-    </div>
-    <div class="media-item" tabindex="0" role="button" aria-label="Ver imagen 4">
-      <img src="media/foto4.jpg" alt="Foto 4 - Vestido y decoración" loading="lazy" />
-    </div>
-    <!-- You can add up to 30 media items in the same format -->
-  </div>
-</main>
-
-<!-- Lightbox Modal -->
-<div id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="Visualización ampliada de media">
-  <div id="lightboxContent">
-    <button id="lightboxClose" aria-label="Cerrar">×</button>
-    <!-- Media will be dynamically inserted here -->
-  </div>
-</div>
-
-<script>
-  // Lightbox functionality
-  const galleryItems = document.querySelectorAll('.media-item');
-  const lightboxOverlay = document.getElementById('lightboxOverlay');
-  const lightboxContent = document.getElementById('lightboxContent');
-  const lightboxClose = document.getElementById('lightboxClose');
-
-  // Enforce max 30 visible items
-  if(galleryItems.length > 30){
-    for(let i=30; i<galleryItems.length; i++){
-      galleryItems[i].style.display = 'none';
-    }
-  }
-
-  function openLightbox(mediaElement) {
-    // Clear previous content
-    while (lightboxContent.children.length > 1) {
-      lightboxContent.removeChild(lightboxContent.lastChild);
-    }
-
-    let clone;
-    if (mediaElement.tagName.toLowerCase() === 'div') {
-      // The media element is the container div; find media inside it
-      const media = mediaElement.querySelector('img, video');
-      if (!media) return;
-      clone = media.cloneNode(true);
-      if(clone.tagName.toLowerCase() === 'video') {
-        clone.controls = true;
-        clone.muted = false;
-        clone.autoplay = true;
-        clone.playsInline = true;
-      }
-    }
-
-    lightboxContent.appendChild(clone);
-    lightboxOverlay.classList.add('active');
-    // Trap focus inside overlay for accessibility
-    lightboxClose.focus();
-  }
-
-  galleryItems.forEach(item => {
-    item.addEventListener('click', () => openLightbox(item));
-    item.addEventListener('keypress', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openLightbox(item);
-      }
+  <div class="message">
+    Queremos compartir contigo muchos momentos, recuerdos y aventuras en la vida de Alexia ❤️
+  </div>  <div class="gallery" id="gallery">
+    <!-- Aquí van las fotos -->
+    <img src="https://i.imgur.com/u7vsfQ9.jpg" alt="Foto 1">
+    <img src="https://i.imgur.com/GkWhmZe.jpg" alt="Foto 2">
+    <img src="https://i.imgur.com/NWyz25I.jpg" alt="Foto 3">
+    <!-- Agrega más imágenes según sea necesario -->
+  </div>  <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
+    <img id="lightbox-img" src="" alt="preview">
+  </div>  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.gallery img').forEach(img => {
+      img.onclick = () => {
+        lightboxImg.src = img.src;
+        lightbox.style.display = 'flex';
+      };
     });
-  });
-
-  lightboxClose.addEventListener('click', () => {
-    lightboxOverlay.classList.remove('active');
-    // Return focus to last gallery item for accessibility
-    galleryItems[0].focus();
-  });
-
-  // Close lightbox when clicking outside content area
-  lightboxOverlay.addEventListener('click', (e) => {
-    if (e.target === lightboxOverlay) {
-      lightboxOverlay.classList.remove('active');
-      galleryItems[0].focus();
-    }
-  });
-
-  // Escape key closes the lightbox
-  window.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && lightboxOverlay.classList.contains('active')) {
-      lightboxOverlay.classList.remove('active');
-      galleryItems[0].focus();
-    }
-  });
-</script>
-</body>
+  </script></body>
 </html>
