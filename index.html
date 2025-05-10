@@ -3,191 +3,301 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>15 años Alexia</title>
+<title>Mis 15 Años</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&display=swap');
-  * {
-    box-sizing: border-box;
+  /* Palo rosa color palette */
+  :root {
+    --palo-rosa-light: #f7d2d2;
+    --palo-rosa: #e2979a;
+    --palo-rosa-dark: #b16365;
+    --background: #fff5f5;
+    --text-color: #4a3031;
   }
+
   body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
     margin: 0;
-    background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
-    font-family: 'Poppins', sans-serif;
-    color: #330e0e;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 10px;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
   header {
-    font-family: 'Great Vibes', cursive;
-    font-size: 3.5rem;
-    font-weight: 600;
-    color: #751515;
-    margin: 15px 0 10px;
-    text-shadow: 1px 1px 5px #fff7aa;
+    background: var(--palo-rosa);
+    padding: 1.5rem 1rem;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(226, 151, 154, 0.5);
+    user-select: none;
   }
-  main {
-    width: 100%;
-    max-width: 350px;
-    background: rgba(255,255,255,0.85);
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    padding: 15px;
-    flex-shrink: 0;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  label {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: #5c1b1b;
-  }
-  input[type="file"] {
-    font-size: 1rem;
-    cursor: pointer;
-    color: #722222;
-  }
-  button {
-    background-color: #da7c0c;
-    border: none;
-    padding: 12px 0;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 1.2rem;
+
+  header h1 {
+    margin: 0;
+    font-weight: 800;
+    font-size: 2.2rem;
     color: white;
-    cursor: pointer;
-    box-shadow: 0 5px 10px #b56c0a;
-    transition: background-color 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(110, 50, 50, 0.7);
   }
-  button:hover {
-    background-color: #b56408;
+
+  main {
+    max-width: 1000px;
+    margin: 1rem auto 2rem auto;
+    padding: 0 1rem;
   }
-  .gallery {
-    margin-top: 20px;
+
+  /* Description text */
+  #galleryDescription {
+    font-size: 1.1rem;
+    padding: 1rem 1rem 2rem 1rem;
+    color: var(--palo-rosa-dark);
+    font-weight: 500;
+    text-align: center;
+    user-select: none;
+    line-height: 1.4;
+  }
+
+  #galleryDescription span.heart {
+    color: #e54b67;
+    font-size: 1.3rem;
+  }
+
+  .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
   }
-  .gallery-item {
+
+  /* Container for each media item */
+  .media-item {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* Square aspect ratio */
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 9px rgba(226, 151, 154, 0.4);
+    cursor: pointer;
+    background-color: white;
+    transition: transform 0.3s ease;
+  }
+
+  .media-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 18px rgba(226, 151, 154, 0.7);
+  }
+
+  /* Media content absolutely positioned and cropped */
+  .media-item img,
+  .media-item video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    user-select: none;
+  }
+
+  /* Lightbox overlay */
+  #lightboxOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+
+  #lightboxOverlay.active {
+    display: flex;
+  }
+
+  #lightboxContent {
+    max-width: 90vw;
+    max-height: 90vh;
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.12);
-    background: #fff;
+    box-shadow: 0 0 40px rgba(255,192,203,0.8);
+    background-color: #fff;
   }
-  .gallery-item img,
-  .gallery-item video {
+
+  #lightboxContent img,
+  #lightboxContent video {
     width: 100%;
     height: auto;
+    max-height: 90vh;
     display: block;
     border-radius: 12px;
   }
-  .footer {
-    margin-top: 10px;
-    font-size: 0.8rem;
-    color: #582b2b;
-    font-style: italic;
+
+  /* Close button */
+  #lightboxClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--palo-rosa-dark);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+  }
+
+  #lightboxClose:hover {
+    opacity: 1;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 600px) {
+    main {
+      margin: 0.5rem;
+      padding: 0 0.5rem;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.6rem;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+    }
+
+    #galleryDescription {
+      font-size: 1rem;
+      padding-bottom: 1rem;
+    }
   }
 </style>
 </head>
 <body>
-<header>15 años Alexia</header>
+<header>
+  <h1>Mis 15 Años</h1>
+</header>
 <main>
-  <form id="uploadForm">
-    <label for="mediaInput">Sube tus fotos o videos</label>
-    <input id="mediaInput" type="file" accept="image/*,video/*" multiple />
-    <button type="submit">Agregar a la galería</button>
-  </form>
-  <section class="gallery" id="gallery" aria-live="polite" aria-label="Galería de fotos y videos"></section>
+
+  <div id="galleryDescription" aria-live="polite" aria-atomic="true">
+    Con mucho cariño te haremos parte de muchos momentos, metas, pasiones y bellos recuerdos de la vida de Alexia <span class="heart" aria-hidden="true">❤️</span>
+  </div>
+
+  <div class="gallery-grid" aria-label="Galería de fotos y videos">
+    <!-- Add your images and videos here with a standard size -->
+    <!-- Example images/videos: Update the src attributes below with your actual file URLs -->
+
+    <div class="media-item" tabindex="0" role="button" aria-label="Ver imagen 1">
+      <img src="media/foto1.jpg" alt="Foto 1 - Celebración Mis 15 Años" loading="lazy" />
+    </div>
+    <div class="media-item" tabindex="0" role="button" aria-label="Ver video 1">
+      <video src="media/video1.mp4" muted preload="metadata" playsinline></video>
+    </div>
+    <div class="media-item" tabindex="0" role="button" aria-label="Ver imagen 2">
+      <img src="media/foto2.jpg" alt="Foto 2 - Fiesta Mis 15 Años" loading="lazy" />
+    </div>
+    <div class="media-item" tabindex="0" role="button" aria-label="Ver imagen 3">
+      <img src="media/foto3.jpg" alt="Foto 3 - Familia y amigos" loading="lazy" />
+    </div>
+    <div class="media-item" tabindex="0" role="button" aria-label="Ver video 2">
+      <video src="media/video2.mp4" muted preload="metadata" playsinline></video>
+    </div>
+    <div class="media-item" tabindex="0" role="button" aria-label="Ver imagen 4">
+      <img src="media/foto4.jpg" alt="Foto 4 - Vestido y decoración" loading="lazy" />
+    </div>
+    <!-- You can add up to 30 media items in the same format -->
+  </div>
 </main>
-<div class="footer">¡Celebra con nosotros este hermoso día!</div>
+
+<!-- Lightbox Modal -->
+<div id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="Visualización ampliada de media">
+  <div id="lightboxContent">
+    <button id="lightboxClose" aria-label="Cerrar">×</button>
+    <!-- Media will be dynamically inserted here -->
+  </div>
+</div>
 
 <script>
-  const gallery = document.getElementById('gallery');
-  const form = document.getElementById('uploadForm');
-  const input = document.getElementById('mediaInput');
+  // Lightbox functionality
+  const galleryItems = document.querySelectorAll('.media-item');
+  const lightboxOverlay = document.getElementById('lightboxOverlay');
+  const lightboxContent = document.getElementById('lightboxContent');
+  const lightboxClose = document.getElementById('lightboxClose');
 
-  // Cargar galería desde localStorage
-  function loadGallery() {
-    const stored = localStorage.getItem('alexiaGallery');
-    if (stored) {
-      const items = JSON.parse(stored);
-      gallery.innerHTML = '';
-      items.forEach(item => {
-        addMediaToGallery(item);
-      });
+  // Enforce max 30 visible items
+  if(galleryItems.length > 30){
+    for(let i=30; i<galleryItems.length; i++){
+      galleryItems[i].style.display = 'none';
     }
   }
 
-  // Agregar un elemento multimedia a la galería
-  function addMediaToGallery(item) {
-    const div = document.createElement('div');
-    div.classList.add('gallery-item');
-
-    if(item.type.startsWith('image')) {
-      const img = document.createElement('img');
-      img.src = item.data;
-      img.alt = 'Foto subida a 15 años Alexia';
-      div.appendChild(img);
-    } else if(item.type.startsWith('video')) {
-      const video = document.createElement('video');
-      video.src = item.data;
-      video.controls = true;
-      video.setAttribute('aria-label', 'Video subido a 15 años Alexia');
-      div.appendChild(video);
+  function openLightbox(mediaElement) {
+    // Clear previous content
+    while (lightboxContent.children.length > 1) {
+      lightboxContent.removeChild(lightboxContent.lastChild);
     }
-    gallery.appendChild(div);
+
+    let clone;
+    if (mediaElement.tagName.toLowerCase() === 'div') {
+      // The media element is the container div; find media inside it
+      const media = mediaElement.querySelector('img, video');
+      if (!media) return;
+      clone = media.cloneNode(true);
+      if(clone.tagName.toLowerCase() === 'video') {
+        clone.controls = true;
+        clone.muted = false;
+        clone.autoplay = true;
+        clone.playsInline = true;
+      }
+    }
+
+    lightboxContent.appendChild(clone);
+    lightboxOverlay.classList.add('active');
+    // Trap focus inside overlay for accessibility
+    lightboxClose.focus();
   }
 
-  // Guardar la galería en localStorage
-  function saveGallery(items) {
-    localStorage.setItem('alexiaGallery', JSON.stringify(items));
-  }
-
-  // Al enviar el formulario subir los archivos seleccionados y agregarlos a la galería
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const files = input.files;
-    if (!files.length) {
-      alert('Por favor selecciona fotos o videos para subir.');
-      return;
-    }
-
-    const readerPromises = [];
-    for (let i = 0; i < files.length; i++) {
-      readerPromises.push(new Promise((resolve, reject) => {
-        const file = files[i];
-        const reader = new FileReader();
-        reader.onload = () => {
-          resolve({type: file.type, data: reader.result});
-        };
-        reader.onerror = () => {
-          reject('Error al leer el archivo');
-        };
-        reader.readAsDataURL(file);
-      }));
-    }
-    Promise.all(readerPromises).then(newItems => {
-      const prevItems = localStorage.getItem('alexiaGallery');
-      let currentItems = prevItems ? JSON.parse(prevItems) : [];
-      currentItems = currentItems.concat(newItems);
-      saveGallery(currentItems);
-      newItems.forEach(item => addMediaToGallery(item));
-      form.reset();
-    }).catch(err => {
-      alert("Ocurrió un error al procesar los archivos");
-      console.error(err);
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => openLightbox(item));
+    item.addEventListener('keypress', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(item);
+      }
     });
   });
 
-  loadGallery();
+  lightboxClose.addEventListener('click', () => {
+    lightboxOverlay.classList.remove('active');
+    // Return focus to last gallery item for accessibility
+    galleryItems[0].focus();
+  });
+
+  // Close lightbox when clicking outside content area
+  lightboxOverlay.addEventListener('click', (e) => {
+    if (e.target === lightboxOverlay) {
+      lightboxOverlay.classList.remove('active');
+      galleryItems[0].focus();
+    }
+  });
+
+  // Escape key closes the lightbox
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lightboxOverlay.classList.contains('active')) {
+      lightboxOverlay.classList.remove('active');
+      galleryItems[0].focus();
+    }
+  });
 </script>
 </body>
 </html>
-
